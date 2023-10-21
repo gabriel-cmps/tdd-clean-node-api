@@ -7,6 +7,11 @@
     "test": "jest",
     "prepare": "husky install"
   },
+  "standard": {
+    "env": [
+      "jest"
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
