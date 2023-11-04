@@ -19,6 +19,7 @@ const makeSut = () => {
 const makeEmailValidator = () => {
   class EmailValidatorSpy {
     isValid (email) {
+      this.email = email
       return this.isEmailValid
     }
   }
@@ -73,7 +74,7 @@ describe('Login Router', () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
-        email: 'example@example.com'
+        email: 'any_email@example.com'
       }
     }
     const httpResponse = await sut.route(httpRequest)
@@ -100,7 +101,7 @@ describe('Login Router', () => {
     const { sut, authUseCaseSpy } = makeSut()
     const httpRequest = {
       body: {
-        email: 'example@example.com',
+        email: 'any_email@example.com',
         password: 'any_password'
       }
     }
@@ -140,7 +141,7 @@ describe('Login Router', () => {
     const sut = new LoginRouter()
     const httpRequest = {
       body: {
-        email: 'example@example.com',
+        email: 'any_email@example.com',
         password: 'any_password'
       }
     }
@@ -153,7 +154,7 @@ describe('Login Router', () => {
     const sut = new LoginRouter({})
     const httpRequest = {
       body: {
-        email: 'example@example.com',
+        email: 'any_email@example.com',
         password: 'any_password'
       }
     }
@@ -167,7 +168,7 @@ describe('Login Router', () => {
     const sut = new LoginRouter(authUseCaseSpy)
     const httpRequest = {
       body: {
-        email: 'example@example.com',
+        email: 'any_email@example.com',
         password: 'any_password'
       }
     }
@@ -223,11 +224,23 @@ describe('Login Router', () => {
     const sut = new LoginRouter(authUseCaseSpy, emailValidatorSpy)
     const httpRequest = {
       body: {
-        email: 'example@example.com',
+        email: 'any_email@example.com',
         password: 'any_password'
       }
     }
     const httpResponse = await sut.route(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
+  })
+
+  test('Should call EmailValidator with correct email', async () => {
+    const { sut, emailValidatorSpy } = makeSut()
+    const httpRequest = {
+      body: {
+        email: 'any_email@example.com',
+        password: 'any_password'
+      }
+    }
+    await sut.route(httpRequest)
+    expect(emailValidatorSpy.email).toBe(httpRequest.body.email)
   })
 })
