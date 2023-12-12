@@ -2,8 +2,9 @@
   "name": "tdd-clean-node-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/main/index.js",
   "scripts": {
+    "start": "node src/main/index.js",
     "test": "jest  --colors --noStackTrace --passWithNoTests",
     "test:unit": "npm test -- --watchAll -c jest-unit-config.js",
     "test:integration": "npm test -- --watchAll -c jest-integration-config.js",
@@ -28,6 +29,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
     "validator": "^13.11.0"
