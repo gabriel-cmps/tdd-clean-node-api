@@ -3,3 +3,4 @@ coverage
 
 *.lock
 *-lock.json
+*.env
